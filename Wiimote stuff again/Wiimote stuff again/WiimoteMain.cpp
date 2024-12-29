@@ -117,6 +117,35 @@ std::wstring GetDeviceProperty(const HDEVINFO& device_info, const PSP_DEVINFO_DA
 	return std::wstring((PWCHAR)unicode_buffer.data());
 }
 
+bool ReadInputReport(HANDLE device_handle, std::vector<BYTE>& input_buffer)
+{
+	DWORD bytes_read = 0;
+	if (ReadFile(device_handle, input_buffer.data(), static_cast<DWORD>(input_buffer.size()), &bytes_read, nullptr))
+	{
+		std::wcout << L"recieved " << bytes_read << L" bytes: ";
+		for (BYTE byte : input_buffer)
+		{
+			std::wcout << std::hex << static_cast<int>(byte) << L" ";
+		}
+		std::cout << "\n";
+		return true;
+	}
+	std::cout << "failed to read input\n";
+	return false;
+}
+
+bool WriteOutputReport(HANDLE device_handle, const std::vector<BYTE>& output_buffer)
+{
+	DWORD bytes_written = 0;
+	if (WriteFile(device_handle, output_buffer.data(), static_cast<DWORD>(output_buffer.size()), &bytes_written, nullptr))
+	{
+		std::wcout << L"sent " << bytes_written << L" bytes to the device\n";
+		return true;
+	}
+	std::cout << "failed to send output report\n";
+	return false;
+}
+
 int main()
 {
 	//initialising bluetooth search filter parameters
@@ -308,7 +337,9 @@ int main()
 		return 0;
 	}
 
-	std::cout << "wiimote found\n";
+	std::cout << "wiimote found\n\n";
+
+
 
 	//////////////////////////
 	//
@@ -316,6 +347,42 @@ int main()
 	//
 	//////////////////////////
 
+
+	PHIDP_PREPARSED_DATA preparsed_data = nullptr;
+	HIDP_CAPS caps;
+
+	//get unparsed data from wii remote
+	if (HidD_GetPreparsedData(wiimote_handle, &preparsed_data))
+	{
+		//check unparsed data for the size caps and store them in caps
+		if (HidP_GetCaps(preparsed_data, &caps) == HIDP_STATUS_SUCCESS)
+		{
+			std::wcout << L"Input Report Size: " << caps.InputReportByteLength << L"\n";
+			std::wcout << L"Output Report Size: " << caps.OutputReportByteLength << L"\n";
+			std::wcout << L"Feature Report Size: " << caps.FeatureReportByteLength << L"\n";
+		}
+		else
+		{
+			std::cout << "failed to get report size data\n";
+		}
+	}
+	else
+	{
+		std::cout << "failed to get preparsed data\n";
+	}
+
+	std::vector<BYTE> input_buffer(caps.InputReportByteLength);
+	std::vector<BYTE> output_buffer(caps.OutputReportByteLength, 0x00);
+
+	bool isRunning = true;
+	//now we run the main program loop
+	while (isRunning)
+	{
+		if (!ReadInputReport(wiimote_handle, input_buffer))
+		{
+			break;
+		}
+	}
 
 	CloseHandle(wiimote_handle);
 	return 0;
