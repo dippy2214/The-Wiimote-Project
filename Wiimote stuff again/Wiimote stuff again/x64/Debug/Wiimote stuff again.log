@@ -1,2 +1,4 @@
 ﻿  WiimoteMain.cpp
-  Wiimote stuff again.vcxproj -> C:\Users\joshu\Desktop\Wiimote-experiments\Wiimote stuff again\x64\Debug\Wiimote stuff again.exe
+C:\Users\joshu\OneDrive\Desktop\Wiimote stuff again\Wiimote-experiments\Wiimote stuff again\Wiimote stuff again\WiimoteMain.cpp(154,47): warning C4267: 'argument': conversion from 'size_t' to 'DWORD', possible loss of data
+C:\Users\joshu\OneDrive\Desktop\Wiimote stuff again\Wiimote-experiments\Wiimote stuff again\Wiimote stuff again\WiimoteMain.cpp(170,1): warning C4715: 'WriteOutputReport': not all control paths return a value
+  Wiimote stuff again.vcxproj -> C:\Users\joshu\OneDrive\Desktop\Wiimote stuff again\Wiimote-experiments\Wiimote stuff again\x64\Debug\Wiimote stuff again.exe

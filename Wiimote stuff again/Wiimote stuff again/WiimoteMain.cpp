@@ -44,7 +44,12 @@ bool AttachWiimote(HANDLE hRadio, const BLUETOOTH_RADIO_INFO& rinfo, BLUETOOTH_D
 	if (!btdi.fConnected && !btdi.fRemembered)
 	{
 		auto const& wm_addr = btdi.Address.rgBytes;
-		std::cout << "Found Wiimote (" << wm_addr[0] << ":" << wm_addr[1] << ":" << wm_addr[2] << ":" << wm_addr[3] << ":" << wm_addr[4] << ":" << wm_addr[5] << "\n";
+		std::cout << "Found Wiimote (" << std::hex << static_cast<int>(wm_addr[0]) << ":"
+			<< std::hex << static_cast<int>(wm_addr[1]) << ":" 
+			<< std::hex << static_cast<int>(wm_addr[2]) << ":"
+			<< std::hex << static_cast<int>(wm_addr[3]) << ":"
+			<< std::hex << static_cast<int>(wm_addr[4]) << ":"
+			<< std::hex << static_cast<int>(wm_addr[5]) << ")\n";
 
 		const DWORD hr = BluetoothSetServiceState(hRadio, &btdi, &HumanInterfaceDeviceServiceClass_UUID, BLUETOOTH_SERVICE_ENABLE);
 
@@ -120,30 +125,48 @@ std::wstring GetDeviceProperty(const HDEVINFO& device_info, const PSP_DEVINFO_DA
 bool ReadInputReport(HANDLE device_handle, std::vector<BYTE>& input_buffer)
 {
 	DWORD bytes_read = 0;
-	if (ReadFile(device_handle, input_buffer.data(), static_cast<DWORD>(input_buffer.size()), &bytes_read, nullptr))
+	OVERLAPPED overlapped;
+	ZeroMemory(&overlapped, sizeof(overlapped));
+	if (!ReadFile(device_handle, input_buffer.data(), static_cast<DWORD>(input_buffer.size()), &bytes_read, &overlapped))
 	{
-		std::wcout << L"recieved " << bytes_read << L" bytes: ";
-		for (BYTE byte : input_buffer)
+		DWORD error = GetLastError();
+		if (error != ERROR_IO_PENDING)
 		{
-			std::wcout << std::hex << static_cast<int>(byte) << L" ";
+			std::cout << "failed to read input\n";
+			return false;
 		}
-		std::cout << "\n";
-		return true;
+		
 	}
-	std::cout << "failed to read input\n";
-	return false;
+	std::wcout << L"recieved " << bytes_read << L" bytes: ";
+	for (BYTE byte : input_buffer)
+	{
+		std::wcout << std::hex << static_cast<int>(byte) << L" ";
+	}
+	std::cout << "\n";
+	return true;
 }
 
-bool WriteOutputReport(HANDLE device_handle, const std::vector<BYTE>& output_buffer)
+bool WriteOutputReport(HANDLE device_handle, BYTE output_buffer[22], size_t buffersize)
 {
 	DWORD bytes_written = 0;
-	if (WriteFile(device_handle, output_buffer.data(), static_cast<DWORD>(output_buffer.size()), &bytes_written, nullptr))
+	OVERLAPPED overlapped;
+	ZeroMemory(&overlapped, sizeof(overlapped));
+	if (!WriteFile(device_handle, output_buffer, buffersize, &bytes_written, &overlapped))
 	{
-		std::wcout << L"sent " << bytes_written << L" bytes to the device\n";
+		DWORD error = GetLastError();
+		if (error != ERROR_IO_PENDING)
+		{
+			std::cout << "failed to send output report\n";
+			std::cout << GetLastError() << "\n" << buffersize << ", " << bytes_written << "\n";
+			return false;
+			
+		}
+	}
+	if (!GetOverlappedResult(device_handle, &overlapped, &bytes_written, true))
+	{
+		std::wcout << L"sent bytes to the device\n";
 		return true;
 	}
-	std::cout << "failed to send output report\n";
-	return false;
 }
 
 int main()
@@ -203,8 +226,9 @@ int main()
 				{
 					std::cout << "valid device\n";
 					//forget this wii remote to avoid errors then form connection again
-					ForgetWiimote(btdi);
+					//ForgetWiimote(btdi);
 					AttachWiimote(hRadio, radioInfo, btdi);
+					
 				}
 
 				//close handles if no valid next device, else set btdi to next device's device info
@@ -371,15 +395,29 @@ int main()
 		std::cout << "failed to get preparsed data\n";
 	}
 
+	Sleep(500);
+
 	std::vector<BYTE> input_buffer(caps.InputReportByteLength);
-	std::vector<BYTE> output_buffer(caps.OutputReportByteLength, 0x00);
+	BYTE output_buffer[22] = { 0 };
+
+	output_buffer[0] = 0x11;
+	output_buffer[1] = 0x10;
+
+	std::cout << sizeof(output_buffer) << "\n";
 
 	bool isRunning = true;
 	//now we run the main program loop
 	while (isRunning)
 	{
+		if (!WriteOutputReport(wiimote_handle, output_buffer, sizeof(output_buffer)))
+		{
+			std::cout << "failed write\n";
+			break;
+		}
+		output_buffer[0] = 0x15;
 		if (!ReadInputReport(wiimote_handle, input_buffer))
 		{
+			std::cout << "failed read\n";
 			break;
 		}
 	}
