@@ -128,7 +128,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Wiimote.cpp" />
     <ClCompile Include="WiimoteMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Wiimote.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

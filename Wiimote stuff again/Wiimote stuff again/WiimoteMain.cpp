@@ -10,6 +10,8 @@
 #include<vector>
 #include <iostream>
 
+#include "Wiimote.h"
+
 
 bool IsValidDeviceName(const std::string& name)
 {
@@ -41,7 +43,7 @@ bool ForgetWiimote(BLUETOOTH_DEVICE_INFO_STRUCT& btdi)
 
 bool AttachWiimote(HANDLE hRadio, const BLUETOOTH_RADIO_INFO& rinfo, BLUETOOTH_DEVICE_INFO_STRUCT& btdi)
 {
-	if (!btdi.fConnected && !btdi.fRemembered)
+	if (!btdi.fConnected)
 	{
 		auto const& wm_addr = btdi.Address.rgBytes;
 		std::cout << "Found Wiimote (" << std::hex << static_cast<int>(wm_addr[0]) << ":"
@@ -122,54 +124,7 @@ std::wstring GetDeviceProperty(const HDEVINFO& device_info, const PSP_DEVINFO_DA
 	return std::wstring((PWCHAR)unicode_buffer.data());
 }
 
-bool ReadInputReport(HANDLE device_handle, std::vector<BYTE>& input_buffer)
-{
-	DWORD bytes_read = 0;
-	OVERLAPPED overlapped;
-	ZeroMemory(&overlapped, sizeof(overlapped));
-	if (!ReadFile(device_handle, input_buffer.data(), static_cast<DWORD>(input_buffer.size()), &bytes_read, &overlapped))
-	{
-		DWORD error = GetLastError();
-		if (error != ERROR_IO_PENDING)
-		{
-			std::cout << "failed to read input\n";
-			return false;
-		}
-		
-	}
-	std::wcout << L"recieved " << bytes_read << L" bytes: ";
-	for (BYTE byte : input_buffer)
-	{
-		std::wcout << std::hex << static_cast<int>(byte) << L" ";
-	}
-	std::cout << "\n";
-	return true;
-}
-
-bool WriteOutputReport(HANDLE device_handle, BYTE output_buffer[22], size_t buffersize)
-{
-	DWORD bytes_written = 0;
-	OVERLAPPED overlapped;
-	ZeroMemory(&overlapped, sizeof(overlapped));
-	if (!WriteFile(device_handle, output_buffer, buffersize, &bytes_written, &overlapped))
-	{
-		DWORD error = GetLastError();
-		if (error != ERROR_IO_PENDING)
-		{
-			std::cout << "failed to send output report\n";
-			std::cout << GetLastError() << "\n" << buffersize << ", " << bytes_written << "\n";
-			return false;
-			
-		}
-	}
-	if (!GetOverlappedResult(device_handle, &overlapped, &bytes_written, true))
-	{
-		std::wcout << L"sent bytes to the device\n";
-		return true;
-	}
-}
-
-int main()
+void BluetoothSetup()
 {
 	//initialising bluetooth search filter parameters
 	BLUETOOTH_DEVICE_SEARCH_PARAMS search;
@@ -189,10 +144,10 @@ int main()
 
 	//initialise handle for radio
 	HANDLE hRadio;
-	
+
 	//this function will find the first radio (our commputer probably) and set the handle based on our parameters
 	HBLUETOOTH_RADIO_FIND hFindRadio = BluetoothFindFirstRadio(&radioParams, &hRadio);
-	
+
 	//while we are using a valid radio
 	while (hFindRadio)
 	{
@@ -226,9 +181,9 @@ int main()
 				{
 					std::cout << "valid device\n";
 					//forget this wii remote to avoid errors then form connection again
-					//ForgetWiimote(btdi);
+					ForgetWiimote(btdi);
 					AttachWiimote(hRadio, radioInfo, btdi);
-					
+
 				}
 
 				//close handles if no valid next device, else set btdi to next device's device info
@@ -248,180 +203,42 @@ int main()
 			hFindRadio = nullptr;
 		}
 	}
+}
 
-	//initialise GUID of device
-	GUID device_id;
-	HidD_GetHidGuid(&device_id);
-
-	//this gets a handle to the device information set for all the HID devices, basically a list of them
-	HDEVINFO const device_info = SetupDiGetClassDevs(&device_id, nullptr, nullptr, (DIGCF_DEVICEINTERFACE | DIGCF_PRESENT));
-
-	//initialise device interface information structure
-	SP_DEVICE_INTERFACE_DATA device_data = {};
-	device_data.cbSize = sizeof(device_data);
-
-	bool isWiimote = false;
-	HANDLE wiimote_handle = INVALID_HANDLE_VALUE;
-
-	//loop through all device interfaces in the device information set defined earlier (puts inforation about given device in device_info)
-	for (int index = 0; SetupDiEnumDeviceInterfaces(device_info, nullptr, &device_id, index, &device_data); index++)
-	{
-		//get buffer size required for device detail and intialise buffers
-		DWORD len;
-		SetupDiGetDeviceInterfaceDetail(device_info, &device_data, nullptr, 0, &len, nullptr);
-		auto detail_data_buf = std::make_unique<std::uint8_t[]>(len);
-		auto detail_data = reinterpret_cast<PSP_DEVICE_INTERFACE_DETAIL_DATA>(detail_data_buf.get());
-		detail_data->cbSize = sizeof(SP_DEVICE_INTERFACE_DETAIL_DATA);
-
-		//device info data buffer intialised
-		SP_DEVINFO_DATA device_info_data = {};
-		device_info_data.cbSize = sizeof(SP_DEVINFO_DATA);
-
-		//retrive device info details
-		if (SetupDiGetDeviceInterfaceDetail(device_info, &device_data, detail_data, len, nullptr, &device_info_data))
-		{
-			//get the device path
-			std::basic_string<TCHAR> device_path(detail_data->DevicePath);
-			std::cout << device_path.c_str()<< "\n";
-
-			//initialise hardware ID buffer and get the hardware ID from the device
-			TCHAR hardware_id[256];
-			if (SetupDiGetDeviceRegistryProperty(device_info, &device_info_data, SPDRP_HARDWAREID, nullptr, (BYTE*)hardware_id, sizeof(hardware_id), nullptr))
-			{
-				//get the wstring from hardwareID
-				std::wstring hw_id_str(hardware_id);
-
-				//filter to get the vendor ID and product ID of device
-				//search structured to work for bluetooth HID format of hardware ID, not USB (which uses _ instead of & and has less characters to skip on the vendor ID)
-				size_t vid_pos = hw_id_str.find(L"VID&");
-				size_t pid_pos = hw_id_str.find(L"PID&");
-
-				//if we find the vendor and product IDs, output them and check if they fit the wiimote vendor and product IDs
-				if (vid_pos != std::wstring::npos && pid_pos != std::wstring::npos)
-				{
-					std::wstring vid = hw_id_str.substr(vid_pos + 8, 4);
-					std::wstring pid = hw_id_str.substr(pid_pos + 4, 4);
-					std::wcout << L"Vendor ID (VID): " << vid << L"\n";
-					std::wcout << L"Product ID (PID): " << pid << L"\n";
-
-					if (vid == L"057e" && (pid == L"0306" || pid == L"0330"))
-					{
-						isWiimote = true;
-					}
-					else
-					{
-						isWiimote = false;
-					}
-				}
-				else
-				{
-					std::wcout << hw_id_str << L"\n";
-					std::cout << "hardware IDs not found\n";
-					isWiimote = false;
-				}
-
-
-			}
-
-			//if a wii remote has been found
-			if (isWiimote)
-			{
-				//open a connection to the HID device path using the createfile function
-				wiimote_handle = CreateFile(device_path.c_str(),			//specify device path
-					GENERIC_READ | GENERIC_WRITE,		//read write access
-					FILE_SHARE_READ | FILE_SHARE_WRITE, //read write shared access
-					nullptr,							//no security lmao
-					OPEN_EXISTING,						//open existing file is one already exists
-					FILE_FLAG_OVERLAPPED,				//async I/O
-					nullptr								//no template file
-				);
-			}
-
-			//check for invalid handle
-			if (wiimote_handle == INVALID_HANDLE_VALUE)
-			{
-				std::cout << "error connecting to device\n";
-			}
-			else
-			{
-				std::cout << "device connection successfully opened\n";
-			}
-		}
-	}
+int main()
+{
+	BluetoothSetup();
 	
-	//close device info list
-	SetupDiDestroyDeviceInfoList(device_info);
-
-	//check for invalid device handle
-	if (wiimote_handle == INVALID_HANDLE_VALUE)
+	Wiimote wiimote;
+	if (!wiimote.CreateHIDConnection())
 	{
-		//close handle without matching device found and end the program
-		CloseHandle(wiimote_handle);
-		std::cout << "no matching device found\n";
 		return 0;
 	}
-
-	std::cout << "wiimote found\n\n";
-
-
-
-	//////////////////////////
-	//
-	// TODO - write the code to handle talking to the wii remote here
-	//
-	//////////////////////////
-
-
-	PHIDP_PREPARSED_DATA preparsed_data = nullptr;
-	HIDP_CAPS caps;
-
-	//get unparsed data from wii remote
-	if (HidD_GetPreparsedData(wiimote_handle, &preparsed_data))
-	{
-		//check unparsed data for the size caps and store them in caps
-		if (HidP_GetCaps(preparsed_data, &caps) == HIDP_STATUS_SUCCESS)
-		{
-			std::wcout << L"Input Report Size: " << caps.InputReportByteLength << L"\n";
-			std::wcout << L"Output Report Size: " << caps.OutputReportByteLength << L"\n";
-			std::wcout << L"Feature Report Size: " << caps.FeatureReportByteLength << L"\n";
-		}
-		else
-		{
-			std::cout << "failed to get report size data\n";
-		}
-	}
-	else
-	{
-		std::cout << "failed to get preparsed data\n";
-	}
+	wiimote.GetCaps();
 
 	Sleep(500);
 
-	std::vector<BYTE> input_buffer(caps.InputReportByteLength);
-	BYTE output_buffer[22] = { 0 };
+	std::vector<BYTE> input_buffer(22);
 
-	output_buffer[0] = 0x11;
-	output_buffer[1] = 0x10;
+	wiimote.SetLEDs();
+	wiimote.SetReportMode();
 
-	std::cout << sizeof(output_buffer) << "\n";
+	std::cout << "\n";
 
+	int count = 0;
+	
 	bool isRunning = true;
 	//now we run the main program loop
 	while (isRunning)
 	{
-		if (!WriteOutputReport(wiimote_handle, output_buffer, sizeof(output_buffer)))
+		wiimote.Read(input_buffer);
+		//std::cout << wiimote.IsButtonDown(WiimoteButtons::A) << "\n";
+		count++;
+		if (count > 5000)
 		{
-			std::cout << "failed write\n";
-			break;
-		}
-		output_buffer[0] = 0x15;
-		if (!ReadInputReport(wiimote_handle, input_buffer))
-		{
-			std::cout << "failed read\n";
-			break;
+			isRunning = false;
 		}
 	}
 
-	CloseHandle(wiimote_handle);
 	return 0;
 }
