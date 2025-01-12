@@ -12,7 +12,9 @@
 #include <thread>
 
 #include "Wiimote.h"
+#include "Keyboard.h"
 
+static const float tickRate = 60.0f;
 
 bool IsValidDeviceName(const std::string& name)
 {
@@ -215,11 +217,84 @@ void ConstantRead(Wiimote* wiimote, bool* isRunning)
 	}
 }
 
+void HandleInputs(Wiimote* wiimote, Keyboard* keyboard)
+{
+	//core buttons
+	if (wiimote->IsButtonDown(WiimoteButtons::WiimoteButtons::A))
+	{
+		keyboard->PressKey(KeyboardKeys::A);
+	}
+	else
+	{
+		keyboard->ReleaseKey(KeyboardKeys::A);
+	}
+	if (wiimote->IsButtonDown(WiimoteButtons::WiimoteButtons::B))
+	{
+		keyboard->PressKey(KeyboardKeys::BACKSPACE);
+	}
+	else
+	{
+		keyboard->ReleaseKey(KeyboardKeys::BACKSPACE);
+	}
+	if (wiimote->IsButtonDown(WiimoteButtons::WiimoteButtons::One))
+	{
+		keyboard->PressKey(KeyboardKeys::S);
+	}
+	else
+	{
+		keyboard->ReleaseKey(KeyboardKeys::S);
+	}
+	if (wiimote->IsButtonDown(WiimoteButtons::WiimoteButtons::Two))
+	{
+		keyboard->PressKey(KeyboardKeys::W);
+	}
+	else
+	{
+		keyboard->ReleaseKey(KeyboardKeys::W);
+	}
+
+	//Dpad
+	if (wiimote->IsButtonDown(WiimoteButtons::WiimoteButtons::DpadDown))
+	{
+		keyboard->PressKey(KeyboardKeys::DOWN_ARROW);
+	}
+	else
+	{
+		keyboard->ReleaseKey(KeyboardKeys::DOWN_ARROW);
+	}
+	if (wiimote->IsButtonDown(WiimoteButtons::WiimoteButtons::DpadUp))
+	{
+		keyboard->PressKey(KeyboardKeys::UP_ARROW);
+	}
+	else
+	{
+		keyboard->ReleaseKey(KeyboardKeys::UP_ARROW);
+	}
+	if (wiimote->IsButtonDown(WiimoteButtons::WiimoteButtons::DpadLeft))
+	{
+		keyboard->PressKey(KeyboardKeys::LEFT_ARROW);
+	}
+	else
+	{
+		keyboard->ReleaseKey(KeyboardKeys::LEFT_ARROW);
+	}
+	if (wiimote->IsButtonDown(WiimoteButtons::WiimoteButtons::DpadRight))
+	{
+		keyboard->PressKey(KeyboardKeys::RIGHT_ARROW);
+	}
+	else
+	{
+		keyboard->ReleaseKey(KeyboardKeys::RIGHT_ARROW);
+	}
+}
+
 int main()
 {
 	BluetoothSetup();
 	
 	Wiimote wiimote;
+	Keyboard keyboard;
+
 	if (!wiimote.CreateHIDConnection())
 	{
 		return 0;
@@ -241,18 +316,32 @@ int main()
 
 	std::thread InputThread(ConstantRead, &wiimote, &isRunning);
 
+	//give time to receive first inputs
+	Sleep(100);
+
+	//timers for deltaTime
+	using clock = std::chrono::high_resolution_clock;
+	auto previousTime = clock::now();
+
+
+	float timePerTick = 1000.0f / tickRate;
+
 	//now we run the main program loop
 	while (isRunning)
 	{
-		//wiimote.Read(input_buffer);
-		//std::cout << wiimote.IsButtonDown(WiimoteButtons::A) << "\n";
-		Sleep(1000);
-		//count++;
-		//if (count > 5000)
-		//{
-			
-			isRunning = false;
-		//}
+		std::cout << "tick\n";
+		//deltaTime calculations
+		auto currentTime = clock::now();
+		float deltaTime = std::chrono::duration_cast<std::chrono::duration<float, std::milli>>(currentTime - previousTime).count();
+		previousTime = currentTime;
+
+		HandleInputs(&wiimote, &keyboard);
+
+		//moderate framerate (spamming sendInput severely effects the performance of my PC)
+		if (deltaTime < timePerTick)
+		{
+			Sleep((timePerTick - deltaTime));
+		}
 	}
 
 	InputThread.join();

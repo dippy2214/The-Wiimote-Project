@@ -21,7 +21,7 @@ public:
 	void SetReportMode();
 
 
-	bool IsButtonDown(WiimoteButtons button);
+	bool IsButtonDown(WiimoteButtons::WiimoteButtons button);
 
 private:
 	HANDLE wiimoteHandle;
@@ -34,5 +34,7 @@ public:
 
 private:
 	std::vector<BYTE> lastInputs;
+
+	bool inputs[11];
 };
 

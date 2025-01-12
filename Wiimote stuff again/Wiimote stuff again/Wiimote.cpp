@@ -167,98 +167,96 @@ void Wiimote::SetReportMode()
 }
 
 
-bool Wiimote::IsButtonDown(WiimoteButtons button)
+bool Wiimote::IsButtonDown(WiimoteButtons::WiimoteButtons button)
 {
 	bool out = false;
 
 	switch (button)
 	{
-	case WiimoteButtons::A:
+	case WiimoteButtons::WiimoteButtons::A:
 	{
-		if (lastInputs[2] & ButtonBitMasks::A)
+		if (lastInputs[2] & ButtonBitMasks::ButtonBitMasks::A)
 		{
-			std::cout << std::hex << lastInputs[2];
-			out = true;
-			
+			out = true;			
 		}
 		break;
 	}
-	case WiimoteButtons::B:
+	case WiimoteButtons::WiimoteButtons::B:
 	{
-		if (lastInputs[2] & ButtonBitMasks::B)
+		if (lastInputs[2] & ButtonBitMasks::ButtonBitMasks::B)
 		{
 			out = true;
 		}
 		break;
 	}
-	case WiimoteButtons::One:
+	case WiimoteButtons::WiimoteButtons::One:
 	{
-		if (lastInputs[2] & ButtonBitMasks::One)
+		if (lastInputs[2] & ButtonBitMasks::ButtonBitMasks::One)
 		{
 			out = true;
 
 		}
 		break;
 	}
-	case WiimoteButtons::Two:
+	case WiimoteButtons::WiimoteButtons::Two:
 	{
-		if (lastInputs[2] & ButtonBitMasks::Two)
+		if (lastInputs[2] & ButtonBitMasks::ButtonBitMasks::Two)
 		{
 			out = true;
 		}
 		break;
 	}
-	case WiimoteButtons::DpadUp:
+	case WiimoteButtons::WiimoteButtons::DpadUp:
 	{
-		if (lastInputs[1] & ButtonBitMasks::DpadUp)
+		if (lastInputs[1] & ButtonBitMasks::ButtonBitMasks::DpadUp)
 		{
 			out = true;
 		}
 		break;
 	}
-	case WiimoteButtons::DpadDown:
+	case WiimoteButtons::WiimoteButtons::DpadDown:
 	{
-		if (lastInputs[1] & ButtonBitMasks::DpadDown)
+		if (lastInputs[1] & ButtonBitMasks::ButtonBitMasks::DpadDown)
 		{
 			out = true;
 		}
 		break;
 	}
-	case WiimoteButtons::DpadRight:
+	case WiimoteButtons::WiimoteButtons::DpadRight:
 	{
-		if (lastInputs[1] & ButtonBitMasks::DpadRight)
+		if (lastInputs[1] & ButtonBitMasks::ButtonBitMasks::DpadRight)
 		{
 			out = true;
 		}
 		break;
 	}
-	case WiimoteButtons::DpadLeft:
+	case WiimoteButtons::WiimoteButtons::DpadLeft:
 	{
-		if (lastInputs[1] & ButtonBitMasks::DpadLeft)
+		if (lastInputs[1] & ButtonBitMasks::ButtonBitMasks::DpadLeft)
 		{
 			out = true;
 		}
 		break;
 	}
-	case WiimoteButtons::Plus:
+	case WiimoteButtons::WiimoteButtons::Plus:
 	{
-		if (lastInputs[1] & ButtonBitMasks::Plus)
+		if (lastInputs[1] & ButtonBitMasks::ButtonBitMasks::Plus)
 		{
 			out = true;
 		}
 		break;
 	}
-	case WiimoteButtons::Minus:
+	case WiimoteButtons::WiimoteButtons::Minus:
 	{
-		if (lastInputs[2] & ButtonBitMasks::Minus)
+		if (lastInputs[2] & ButtonBitMasks::ButtonBitMasks::Minus)
 		{
 			out = true;
 		}
 		break;
 	}
-	case WiimoteButtons::Home:
+	case WiimoteButtons::WiimoteButtons::Home:
 	{
-		if (lastInputs[2] & ButtonBitMasks::Home)
+		if (lastInputs[2] & ButtonBitMasks::ButtonBitMasks::Home)
 		{
 			out = true;
 		}
