@@ -170,11 +170,12 @@ void Wiimote::SetReportMode()
 bool Wiimote::IsButtonDown(WiimoteButtons button)
 {
 	bool out = false;
+
 	switch (button)
 	{
-	case A:
+	case WiimoteButtons::A:
 	{
-		if (lastInputs[2] & 0x08)
+		if (lastInputs[2] & ButtonBitMasks::A)
 		{
 			std::cout << std::hex << lastInputs[2];
 			out = true;
@@ -182,82 +183,82 @@ bool Wiimote::IsButtonDown(WiimoteButtons button)
 		}
 		break;
 	}
-	case B:
+	case WiimoteButtons::B:
 	{
-		if (lastInputs[2] & 0x04)
+		if (lastInputs[2] & ButtonBitMasks::B)
 		{
 			out = true;
 		}
 		break;
 	}
-	case One:
+	case WiimoteButtons::One:
 	{
-		if (lastInputs[2] & 0x02)
+		if (lastInputs[2] & ButtonBitMasks::One)
 		{
 			out = true;
 
 		}
 		break;
 	}
-	case Two:
+	case WiimoteButtons::Two:
 	{
-		if (lastInputs[2] & 0x01)
+		if (lastInputs[2] & ButtonBitMasks::Two)
 		{
 			out = true;
 		}
 		break;
 	}
-	case DpadUp:
+	case WiimoteButtons::DpadUp:
 	{
-		if (lastInputs[1] & 0x08)
+		if (lastInputs[1] & ButtonBitMasks::DpadUp)
 		{
 			out = true;
 		}
 		break;
 	}
-	case DpadDown:
+	case WiimoteButtons::DpadDown:
 	{
-		if (lastInputs[1] & 0x04)
+		if (lastInputs[1] & ButtonBitMasks::DpadDown)
 		{
 			out = true;
 		}
 		break;
 	}
-	case DpadRight:
+	case WiimoteButtons::DpadRight:
 	{
-		if (lastInputs[1] & 0x02)
+		if (lastInputs[1] & ButtonBitMasks::DpadRight)
 		{
 			out = true;
 		}
 		break;
 	}
-	case DpadLeft:
+	case WiimoteButtons::DpadLeft:
 	{
-		if (lastInputs[1] & 0x01)
+		if (lastInputs[1] & ButtonBitMasks::DpadLeft)
 		{
 			out = true;
 		}
 		break;
 	}
-	case Plus:
+	case WiimoteButtons::Plus:
 	{
-		if (lastInputs[1] & 0x10)
+		if (lastInputs[1] & ButtonBitMasks::Plus)
 		{
 			out = true;
 		}
 		break;
 	}
-	case Minus:
+	case WiimoteButtons::Minus:
 	{
-		if (lastInputs[2] & 0x10)
+		if (lastInputs[2] & ButtonBitMasks::Minus)
 		{
 			out = true;
 		}
 		break;
 	}
-	case Home:
+	case WiimoteButtons::Home:
 	{
-		if (lastInputs[2] & 0x80)
+		if (lastInputs[2] & ButtonBitMasks::Home)
 		{
 			out = true;
 		}

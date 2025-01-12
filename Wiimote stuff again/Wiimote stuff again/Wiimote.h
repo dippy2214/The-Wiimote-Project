@@ -7,21 +7,7 @@
 #include <iostream>
 #include <vector>
 
-enum WiimoteButtons
-{
-	A,
-	B,
-	One,
-	Two,
-	DpadUp,
-	DpadDown,
-	DpadLeft,
-	DpadRight,
-	Plus,
-	Minus,
-	Home
-
-};
+#include "Enums.h"
 
 
 class Wiimote
