@@ -9,6 +9,7 @@
 
 #include<vector>
 #include <iostream>
+#include <thread>
 
 #include "Wiimote.h"
 
@@ -205,6 +206,15 @@ void BluetoothSetup()
 	}
 }
 
+void ConstantRead(Wiimote* wiimote, bool* isRunning)
+{
+	std::vector<BYTE> inBuf(22);
+	while (*isRunning == true)
+	{
+		wiimote->Read(inBuf);
+	}
+}
+
 int main()
 {
 	BluetoothSetup();
@@ -228,17 +238,24 @@ int main()
 	int count = 0;
 	
 	bool isRunning = true;
+
+	std::thread InputThread(ConstantRead, &wiimote, &isRunning);
+
 	//now we run the main program loop
 	while (isRunning)
 	{
-		wiimote.Read(input_buffer);
+		//wiimote.Read(input_buffer);
 		//std::cout << wiimote.IsButtonDown(WiimoteButtons::A) << "\n";
-		count++;
-		if (count > 5000)
-		{
+		Sleep(1000);
+		//count++;
+		//if (count > 5000)
+		//{
+			
 			isRunning = false;
-		}
+		//}
 	}
+
+	InputThread.join();
 
 	return 0;
 }

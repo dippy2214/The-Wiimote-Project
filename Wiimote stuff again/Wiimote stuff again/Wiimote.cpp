@@ -166,6 +166,7 @@ void Wiimote::SetReportMode()
 	Write(outBuf);
 }
 
+
 bool Wiimote::IsButtonDown(WiimoteButtons button)
 {
 	bool out = false;

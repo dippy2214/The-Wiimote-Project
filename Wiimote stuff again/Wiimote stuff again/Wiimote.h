@@ -35,7 +35,6 @@ public:
 	void SetReportMode();
 
 
-
 	bool IsButtonDown(WiimoteButtons button);
 
 private:
