@@ -9,19 +9,31 @@
 
 #include "Enums.h"
 
+struct IRdata
+{
+	int x = 0;
+	int y = 0;
+};
 
 class Wiimote
 {
-
+	
 public:
+	
+
 	bool CreateHIDConnection();
 	void GetCaps();
 
 	void SetLEDs();
 	void SetReportMode();
+	void EnableIRSensor();
 
 
 	bool IsButtonDown(WiimoteButtons::WiimoteButtons button);
+	int getAccelX();
+	int getAccelY();
+	int getAccelZ();
+	IRdata getIRData();
 
 private:
 	HANDLE wiimoteHandle;

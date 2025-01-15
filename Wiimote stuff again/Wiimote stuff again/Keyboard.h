@@ -19,8 +19,10 @@ public:
 private:
 	bool iskeydown[104];
 
-	KeyInfo keyInfo[104] = {
-
+	KeyInfo keyInfo[102] = {
+		//mouse clicks
+		{LEFT_CLICK, 0x01},
+		{RIGHT_CLICK, 0x02},
 		//letters
 		{A, 0x41},
 		{B, 0x42},

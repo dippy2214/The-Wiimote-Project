@@ -43,6 +43,8 @@ namespace ButtonBitMasks
 //104 keys based off the keyboard i happen to have right now
 enum KeyboardKeys
 {
+	LEFT_CLICK,
+	RIGHT_CLICK,
 	A,
 	B,
 	C,

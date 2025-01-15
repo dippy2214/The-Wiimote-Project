@@ -162,8 +162,62 @@ void Wiimote::SetReportMode()
 	// 0x12 = data report mode
 	// 0x00 = non continuous reporting (only reports when change happens)
 	// 0x30 = report mode
-	std::vector<BYTE> outBuf({ 0x12, 0x00, 0x30 });
+	std::vector<BYTE> outBuf({ 0x12, 0x00, 0x33 });
 	Write(outBuf);
+}
+
+//this code enables wii level 3 for the IR sensor
+void Wiimote::EnableIRSensor()
+{	
+	//enable IR camera toggles
+	std::vector<BYTE> outBuf({ 0x13, 0x04 });
+	Write(outBuf);
+	//sleep for 50 between transmissions to avoid random state weirdness
+	Sleep(50);
+	outBuf = { 0x1a, 0x04 };
+	Write(outBuf);
+	
+	//write to buffers
+	//inform start
+	//Sleep(50);
+	//outBuf = { 0x16, /*set to control registers*/0x04,
+	//	/*address space to write to*/ 0xb0, 0x00, 0x30, 
+	//	/*Size to write in bytes*/ 0x01,
+	//	/*data being written*/ 0x08 };
+	//Write(outBuf);
+
+	//data block 1
+	Sleep(50);
+	outBuf = { 0x16, /*set to control registers*///0x04,
+		/*address space to write to*/ 0xb0, 0x00, 0x30, 
+		///*Size to write in bytes*/ 0x09,
+		/*data being written*/ 0x02, 0x00, 0x00, 0x71, 0x01/*, 0x00, 0xaa, 0x00, 064*/};
+	Write(outBuf);
+
+	//data block 2
+	Sleep(50);
+	outBuf = { 0x16, /*set to control registers*///0x04,
+		/*address space to write to*/ 0xb0, 0x00, 0x1a,
+		///*Size to write in bytes*/ 0x02,
+		/*data being written*/ 0x00, 0x41 };
+	Write(outBuf);
+
+	//IR sensor mode
+	Sleep(50);
+	outBuf = { 0x16, /*set to control registers*/0x04,
+		/*address space to write to*/ 0xb0, 0x00, 0x33,
+		///*Size to write in bytes*/ 0x01,
+		/*data being written*/ 0x08 };
+	Write(outBuf);
+
+	////inform end
+	//Sleep(50);
+	//outBuf = { 0x16, /*set to control registers*/0x04,
+	//	/*address space to write to*/ 0xb0, 0x00, 0x30,
+	//	/*Size to write in bytes*/ 0x01,
+	//	/*data being written*/ 0x08 };
+	//Write(outBuf);
+
 }
 
 
@@ -264,6 +318,26 @@ bool Wiimote::IsButtonDown(WiimoteButtons::WiimoteButtons button)
 	}
 	}
 	return out;
+}
+
+int Wiimote::getAccelX()
+{
+	return lastInputs[3];
+}
+
+int Wiimote::getAccelY()
+{
+	return lastInputs[4];
+}
+
+int Wiimote::getAccelZ()
+{
+	return lastInputs[5];
+}
+
+IRdata Wiimote::getIRData()
+{
+	return IRdata();
 }
 
 bool Wiimote::Write(std::vector<BYTE> outputBuffer)

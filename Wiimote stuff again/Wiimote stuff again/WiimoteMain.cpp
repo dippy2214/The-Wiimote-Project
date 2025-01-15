@@ -307,6 +307,7 @@ int main()
 
 	wiimote.SetLEDs();
 	wiimote.SetReportMode();
+	//wiimote.EnableIRSensor();
 
 	std::cout << "\n";
 
@@ -329,13 +330,14 @@ int main()
 	//now we run the main program loop
 	while (isRunning)
 	{
-		std::cout << "tick\n";
 		//deltaTime calculations
 		auto currentTime = clock::now();
 		float deltaTime = std::chrono::duration_cast<std::chrono::duration<float, std::milli>>(currentTime - previousTime).count();
 		previousTime = currentTime;
 
 		HandleInputs(&wiimote, &keyboard);
+
+		//std::cout << std::dec << wiimote.getAccelX() << ", " << wiimote.getAccelY() << ", " << wiimote.getAccelZ() << "\n";
 
 		//moderate framerate (spamming sendInput severely effects the performance of my PC)
 		if (deltaTime < timePerTick)
