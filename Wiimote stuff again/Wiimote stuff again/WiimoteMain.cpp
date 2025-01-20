@@ -306,9 +306,9 @@ int main()
 	std::vector<BYTE> input_buffer(22);
 
 	wiimote.SetLEDs();
+	wiimote.EnableIRSensor();
 	wiimote.SetReportMode();
-	//wiimote.EnableIRSensor();
-
+	
 	std::cout << "\n";
 
 	int count = 0;

@@ -22,7 +22,7 @@ void Keyboard::ReleaseKey(KeyboardKeys keyboardKey)
 		input.type = INPUT_KEYBOARD;
 		input.ki.wVk = keyInfo[keyboardKey].hexCode;
 		input.ki.wScan = 0;
-		input.ki.dwFlags = KEYEVENTF_KEYUP; //0 for key down
+		input.ki.dwFlags = KEYEVENTF_KEYUP; //0x02 for key up
 		input.ki.time = 0;
 		input.ki.dwExtraInfo = 0;
 

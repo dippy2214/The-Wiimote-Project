@@ -179,26 +179,26 @@ void Wiimote::EnableIRSensor()
 	
 	//write to buffers
 	//inform start
-	//Sleep(50);
-	//outBuf = { 0x16, /*set to control registers*/0x04,
-	//	/*address space to write to*/ 0xb0, 0x00, 0x30, 
-	//	/*Size to write in bytes*/ 0x01,
-	//	/*data being written*/ 0x08 };
-	//Write(outBuf);
+	Sleep(50);
+	outBuf = { 0x16, /*set to control registers*/0x04,
+		/*address space to write to*/ 0xb0, 0x00, 0x30, 
+		/*Size to write in bytes*/ 0x08,
+		/*data being written*/ 0x08 };
+	Write(outBuf);
 
 	//data block 1
 	Sleep(50);
 	outBuf = { 0x16, /*set to control registers*///0x04,
 		/*address space to write to*/ 0xb0, 0x00, 0x30, 
-		///*Size to write in bytes*/ 0x09,
-		/*data being written*/ 0x02, 0x00, 0x00, 0x71, 0x01/*, 0x00, 0xaa, 0x00, 064*/};
+		/*Size to write in bytes*/ 0x09,
+		/*data being written*/ 0x02, 0x00, 0x00, 0x71, 0x01, 0x00, 0xaa, 0x00, 064};
 	Write(outBuf);
 
 	//data block 2
 	Sleep(50);
 	outBuf = { 0x16, /*set to control registers*///0x04,
 		/*address space to write to*/ 0xb0, 0x00, 0x1a,
-		///*Size to write in bytes*/ 0x02,
+		/*Size to write in bytes*/ 0x04,
 		/*data being written*/ 0x00, 0x41 };
 	Write(outBuf);
 
@@ -206,17 +206,17 @@ void Wiimote::EnableIRSensor()
 	Sleep(50);
 	outBuf = { 0x16, /*set to control registers*/0x04,
 		/*address space to write to*/ 0xb0, 0x00, 0x33,
-		///*Size to write in bytes*/ 0x01,
+		/*Size to write in bytes*/ 0x08,
 		/*data being written*/ 0x08 };
 	Write(outBuf);
 
 	////inform end
-	//Sleep(50);
-	//outBuf = { 0x16, /*set to control registers*/0x04,
-	//	/*address space to write to*/ 0xb0, 0x00, 0x30,
-	//	/*Size to write in bytes*/ 0x01,
-	//	/*data being written*/ 0x08 };
-	//Write(outBuf);
+	Sleep(50);
+	outBuf = { 0x16, /*set to control registers*/0x04,
+		/*address space to write to*/ 0xb0, 0x00, 0x30,
+		/*Size to write in bytes*/ 0x08,
+		/*data being written*/ 0x08 };
+	Write(outBuf);
 
 }
 
