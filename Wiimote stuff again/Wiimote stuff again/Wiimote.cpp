@@ -166,7 +166,7 @@ void Wiimote::SetReportMode()
 	Write(outBuf);
 }
 
-//this code enables wii level 3 for the IR sensor
+//this code enables wii level 3 sensitivity for the IR sensor
 void Wiimote::EnableIRSensor()
 {	
 	//enable IR camera toggles
@@ -191,7 +191,7 @@ void Wiimote::EnableIRSensor()
 	outBuf = { 0x16, /*set to control registers*///0x04,
 		/*address space to write to*/ 0xb0, 0x00, 0x00, 
 		/*Size to write in bytes*/ 0x09,
-		/*data being written*/ 0x02, 0x00, 0x00, 0x71, 0x01, 0x00, 0xaa, 0x00, 064};
+		/*data being written*/ 0x02, 0x00, 0x00, 0x71, 0x01, 0x00, 0xaa, 0x00, 0x64};
 	Write(outBuf);
 
 	//data block 2
@@ -199,7 +199,7 @@ void Wiimote::EnableIRSensor()
 	outBuf = { 0x16, /*set to control registers*///0x04,
 		/*address space to write to*/ 0xb0, 0x00, 0x1a,
 		/*Size to write in bytes*/ 0x02,
-		/*data being written*/ 0x00, 0x41 };
+		/*data being written*/ 0x63, 0x03 };
 	Write(outBuf);
 
 	//IR sensor mode
