@@ -337,7 +337,26 @@ int Wiimote::getAccelZ()
 
 IRdata Wiimote::getIRData()
 {
-	return IRdata();
+	IRdata output;
+	
+	std::vector<BYTE> package1 = { lastInputs[6], lastInputs[7], lastInputs[8] };
+
+	int16_t xValue = package1[0];
+	xValue += (int16_t)(package1[2] & 0b00110000) << 4;
+
+	int16_t yValue = package1[1];
+	yValue += (int16_t)(package1[2] & 0b11000000) << 2;
+
+	output.x = xValue;
+	output.y = yValue;
+
+	if (output.x == 1023 && output.y == 1023)
+	{
+		output.x = -1;
+		output.y = -1;
+	}
+
+	return output;
 }
 
 bool Wiimote::Write(std::vector<BYTE> outputBuffer)
@@ -386,12 +405,12 @@ bool Wiimote::Read(std::vector<BYTE> inputBuffer)
 	}
 	if (GetOverlappedResult(wiimoteHandle, &overlapped, &bytes_read, true))
 	{
-		std::wcout << L"recieved " << bytes_read << L" bytes: ";
+		/*std::wcout << L"recieved " << bytes_read << L" bytes: ";
 		for (BYTE byte : inputBuffer)
 		{
 			std::wcout << std::hex << static_cast<int>(byte) << L" ";
 		}
-		std::cout << "\n";
+		std::cout << "\n";*/
 		lastInputs = inputBuffer;
 		return true;
 	}

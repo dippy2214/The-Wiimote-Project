@@ -222,11 +222,11 @@ void HandleInputs(Wiimote* wiimote, Keyboard* keyboard)
 	//core buttons
 	if (wiimote->IsButtonDown(WiimoteButtons::WiimoteButtons::A))
 	{
-		keyboard->PressKey(KeyboardKeys::A);
+		keyboard->PressKey(KeyboardKeys::LEFT_CLICK);
 	}
 	else
 	{
-		keyboard->ReleaseKey(KeyboardKeys::A);
+		keyboard->ReleaseKey(KeyboardKeys::LEFT_CLICK);
 	}
 	if (wiimote->IsButtonDown(WiimoteButtons::WiimoteButtons::B))
 	{
@@ -286,6 +286,21 @@ void HandleInputs(Wiimote* wiimote, Keyboard* keyboard)
 	{
 		keyboard->ReleaseKey(KeyboardKeys::RIGHT_ARROW);
 	}
+
+
+}
+
+IRdata convertToScreenAspectRatio(IRdata toConvert)
+{
+	toConvert.x = 1023 - toConvert.x;
+
+	IRdata output;
+	
+	output.x = static_cast<int>(static_cast<float>(toConvert.x) * static_cast<float>(GetSystemMetrics(SM_CXSCREEN)) / 1023);
+	output.y = static_cast<int>(static_cast<float>(toConvert.y) * static_cast<float>(GetSystemMetrics(SM_CYSCREEN)) / 768);
+
+
+	return output;
 }
 
 int main()
@@ -338,6 +353,15 @@ int main()
 		HandleInputs(&wiimote, &keyboard);
 
 		//std::cout << std::dec << wiimote.getAccelX() << ", " << wiimote.getAccelY() << ", " << wiimote.getAccelZ() << "\n";
+		//std::cout << wiimote.getIRData().x << ", " << wiimote.getIRData().y << "\n";
+		
+		if (wiimote.getIRData().x != -1 && wiimote.getIRData().y != -1)
+		{
+			IRdata pointerPos = convertToScreenAspectRatio(wiimote.getIRData());
+			SetCursorPos(pointerPos.x, pointerPos.y);
+		}
+
+		
 
 		//moderate framerate (spamming sendInput severely effects the performance of my PC)
 		if (deltaTime < timePerTick)
