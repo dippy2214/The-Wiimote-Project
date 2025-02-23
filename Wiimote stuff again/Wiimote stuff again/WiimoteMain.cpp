@@ -243,6 +243,7 @@ void HandleInputs(Wiimote* wiimote, Keyboard* keyboard)
 	//core buttons
 	if (wiimote->IsButtonDown(WiimoteButtons::WiimoteButtons::A))
 	{
+		//std::cout << "A press\n";
 		keyboard->PressKey(KeyboardKeys::LEFT_CLICK);
 	}
 	else
@@ -349,7 +350,7 @@ void MainEmulationLoop(HWND hwnd)
 
 	int count = 0;
 
-	std::thread InputThread(ConstantReadAsync, &wiimote, &isRunning);
+	std::thread InputThread = std::thread(ConstantReadAsync, &wiimote, &isRunning);
 
 	//give time to receive first inputs
 	Sleep(100);

@@ -37,7 +37,7 @@ public:
 
 private:
 	HANDLE wiimoteHandle;
-	USHORT outputReportSize;
+	USHORT outputReportSize = 22;
 
 	bool Write(std::vector<BYTE> outputBuffer);
 
