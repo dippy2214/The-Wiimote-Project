@@ -1,5 +1,6 @@
 #include "Keyboard.h"
 
+//press a key on the virtual keyboard
 void Keyboard::PressKey(KeyboardKeys keyboardKey)
 {
 		INPUT input;
@@ -14,6 +15,7 @@ void Keyboard::PressKey(KeyboardKeys keyboardKey)
 		keyInfo[keyboardKey].isKeyDown = true;
 }
 
+//release key on virtual keyboard
 void Keyboard::ReleaseKey(KeyboardKeys keyboardKey)
 {
 	if (keyInfo[keyboardKey].isKeyDown)

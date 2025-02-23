@@ -1,7 +1,7 @@
 #include "Wiimote.h"
 
 
-
+//create HID connection to a wii remote with an existing bluetooth connection to this computer
 bool Wiimote::CreateHIDConnection()
 {
 	//initialise GUID of device
@@ -120,6 +120,7 @@ bool Wiimote::CreateHIDConnection()
 	return true;
 }
 
+//get the report sizes of the wiimote
 void Wiimote::GetCaps()
 {
 	PHIDP_PREPARSED_DATA preparsed_data = nullptr;
@@ -149,6 +150,7 @@ void Wiimote::GetCaps()
 	HidD_FreePreparsedData(preparsed_data);
 }
 
+//set LEDs on wii remote
 void Wiimote::SetLEDs()
 {
 	//0x11 = setting LEDs
@@ -157,6 +159,7 @@ void Wiimote::SetLEDs()
 	Write(outBuf);
 }
 
+//set report mode of wii remote 
 void Wiimote::SetReportMode()
 {
 	// 0x12 = data report mode
@@ -220,7 +223,7 @@ void Wiimote::EnableIRSensor()
 
 }
 
-
+//check if a given button is down on the last report in the wii remote
 bool Wiimote::IsButtonDown(WiimoteButtons::WiimoteButtons button)
 {
 	bool out = false;
@@ -320,21 +323,25 @@ bool Wiimote::IsButtonDown(WiimoteButtons::WiimoteButtons button)
 	return out;
 }
 
+//get x accel data
 int Wiimote::getAccelX()
 {
 	return lastInputs[3];
 }
 
+//get y accel data
 int Wiimote::getAccelY()
 {
 	return lastInputs[4];
 }
 
+//get z accel data
 int Wiimote::getAccelZ()
 {
 	return lastInputs[5];
 }
 
+//get IR sensor data
 IRdata Wiimote::getIRData()
 {
 	IRdata output;
@@ -359,6 +366,19 @@ IRdata Wiimote::getIRData()
 	return output;
 }
 
+bool Wiimote::IsConnected()
+{
+	//ask HID connection for its attributes as a way to determine if it is still connected
+	HIDD_ATTRIBUTES Attributes;
+	Attributes.Size = sizeof(Attributes);
+	if (HidD_GetAttributes(wiimoteHandle, &Attributes) && wiimoteHandle != INVALID_HANDLE_VALUE)
+	{
+		return true;
+	}
+	return false;
+}
+
+//send packets to wiimote
 bool Wiimote::Write(std::vector<BYTE> outputBuffer)
 {
 	DWORD bytes_written = 0;
@@ -385,6 +405,7 @@ bool Wiimote::Write(std::vector<BYTE> outputBuffer)
 	}
 }
 
+//read from wiimote input report
 bool Wiimote::Read(std::vector<BYTE> inputBuffer)
 {
 	DWORD bytes_read = 0;

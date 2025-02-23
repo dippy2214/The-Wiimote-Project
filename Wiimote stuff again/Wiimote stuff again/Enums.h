@@ -3,6 +3,7 @@
 
 namespace WiimoteButtons
 {
+	//enum for all wii remote buttons
 	enum class WiimoteButtons
 	{
 		A,
@@ -21,6 +22,7 @@ namespace WiimoteButtons
 
 namespace ButtonBitMasks
 {
+	//bitmasks for wii report buttons
 	enum ButtonBitMasks
 	{
 		//byte one

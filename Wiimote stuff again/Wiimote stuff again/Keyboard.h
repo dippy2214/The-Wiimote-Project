@@ -19,6 +19,7 @@ public:
 private:
 	bool iskeydown[104];
 
+	//pairs of enum and hex codes for the keyboard keys
 	KeyInfo keyInfo[102] = {
 		//mouse clicks
 		{LEFT_CLICK, 0x01},

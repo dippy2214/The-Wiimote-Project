@@ -19,8 +19,6 @@ class Wiimote
 {
 	
 public:
-	
-
 	bool CreateHIDConnection();
 	void GetCaps();
 
@@ -34,6 +32,8 @@ public:
 	int getAccelY();
 	int getAccelZ();
 	IRdata getIRData();
+
+	bool IsConnected();
 
 private:
 	HANDLE wiimoteHandle;
