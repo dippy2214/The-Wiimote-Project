@@ -138,8 +138,8 @@ so long.' Surely this can't have been that bad.
 Well, let's take a look. To make this project work, I need to do a few things:
 - Device discovery, where I find all available devices 
 - Making the connection, where I pick out the device I want and connect to it
-- Managing the connection, which is by far the most complicated part, where I broadcast to and recieve data from with the wii remote
-- Interpreting data, where I take the data the wii remote is giving me and make sense of it
+- Collecting the data, where I broadcast to and recieve data from with the wii remote
+- Interpreting data, which is by far the most complicated part, where I take the data the wii remote is giving me and make sense of it
 - Using the data, where I take what I have and use it to emulate keyboard inputs as I see fit
 
 My current issue is that while I have figured out device discovery, making the connection eludes me. The wii remote has a bluetooth pin, which IS NOT
@@ -172,17 +172,30 @@ lack of direction with what to look at. I got so caught up in pairing and the pi
 just not do that.
 
 Once the bluetooth connection is made the program is then free to transition to HID connection, which ironically involves discovery again on the HID side,
-and this time checking the hardware IDs. This is something I actually spoke about with someone who worked on the wiimote support for dolphin emulator, and
-I learned that dolphin emulator handles this even worse. Because it needs to support all third party wii remotes, it cannot exhaustively fill in hardware
-IDs for all of them. Therefore, it just tries to use every device as a wii remote and waits around to see if it works (for windows. linux just lets you get
-the HID devices directly from your reference to the bluetooth device 🙂). I think the optimal solution to this problem, which I may test and try to add to
-dolphin myself, is to store the hardware IDs in some sort of dictionary in runtime when you find the wiimote as a bluetooth device, and use the same 
-hardware IDs to pick out the HID device you want, but I haven't got around to this yet as I'm excited to have things working and want to push on with this
-project.
+and this time checking the hardware IDs against what I know nintendo's wiimote have. This is something I actually spoke about with someone who worked on 
+the wiimote support for dolphin emulator, and I learned that dolphin emulator handles this even worse. Because it needs to support all third party wii 
+remotes, it cannot exhaustively fill in hardware IDs for all of them. Therefore, it just tries to use every device as a wii remote and waits around to see 
+if it works (for windows. linux just lets you get the HID devices directly from your reference to the bluetooth device 🙂). I think the optimal solution 
+to this problem, which I may test and try to add to dolphin myself, is to store the hardware IDs in some sort of dictionary in runtime when you find the 
+wiimote as a bluetooth device, and use the same hardware IDs to pick out the HID device you want, but I haven't got around to this yet as I'm excited to 
+have things working and want to push on with this project.
 
-#### 👨‍💼 Managing The Communication
+#### 👨‍💼 Collecting dthe data
+This is where the wiibrew wiki page truly came to be the single most valuable resource I found on this journey. The wiimote has a system of output reports,
+which act as output modes it will switch to when asked by the radio. The wiki page tells me exactly which binary code to send to the wiimote to get the 
+different reports from it, so I started with just the buttons (report 0x30) to test. I created a separate thread to listen to the wiimote and update the data
+to store it, and quickly realised that I wanted to refactor the code so that wiimotes were their own object. My early version of this was rushed, and it 
+is difficult to architect systems you still don't fully understand, so I didn't waste too much time here. But I did want the wiimote to store it's own last
+recieved data so when I wanted to access the buttons I could access the last update the program recieved rather than requesting and waiting for a new 
+one. 
+
+After I was satisfied with my systems for this, creating buffers of the correct size and reliably recording correct data, I looked into using some of the 
+other reports. I looked at getting accelerometer data and data from the IR sensor, but this is better discussed through how it is interpreted. to collect
+this new data it is a simple matter of switching reports and making sure the buffer sizes are prepared, but for any full size output reports the wii remote
+uses a 22 byte system.
 
 #### 📊 Interpreting Data
+
 
 #### ⌨ Using The Data
 
