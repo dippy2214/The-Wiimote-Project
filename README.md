@@ -57,6 +57,10 @@ language similar to python and get something up and running quite quickly. In my
 
 [![Watch Here](https://img.youtube.com/vi/BgOgzSvBRzw/0.jpg)](https://www.youtube.com/watch?v=BgOgzSvBRzw&feature=youtu.be "Watch Here!")
 
+I have come to love the GlovePIE project, not least because I would now love to make something like that myself. However, while this simple version of
+the project satisfied me for a while, it was not enough to shake the idea from my head. I felt as though it had been too easy, and as such that I had
+not learned as much as I could have. I wanted *more*.
+
 
 
 
