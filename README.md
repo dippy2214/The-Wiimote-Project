@@ -53,7 +53,10 @@ GlovePIE was originally an emulator for VR gloves, but the project grew to suppo
 with an IDE and supports a simple scripting language, which can be used to quickly and easily program a system for binding different inputs. 
 However, it will not connect the wii remote to the computer itself. For this, I downloaded dolphin emulator, an open source emulator for old
 Nintendo consoles, and connected the wii remote through that. With this system, I was able to write keybinds for my wii remote in a simple scripting 
-language similar to python and get something up and running quite quickly. 
+language similar to python and get something up and running quite quickly. In my excitement, I even got a [video](https://youtu.be/BgOgzSvBRzw)
+to share with friends!
+
+
 
 
 
