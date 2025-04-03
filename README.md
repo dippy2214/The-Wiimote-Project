@@ -223,6 +223,27 @@ All that was left was to translate the byte data directly into an int and piece 
 and my own monitor, and it was good to go!
 
 #### ⌨ Using The Data
+Now that I had the numbers and buttons, all the was left was to create a system to convert this to emulating keyboard and mouse inputs. Finally, I was 
+seeing the light at the end of the tunnel that was this project. Admittedly, it was a amazingly interesting tunnel with lots of pretty sights along the way,
+but after 3 years everyone wants to see some kind of closure and move on to the next phase. I built a system, again using the windows API, to run the press 
+key command based off a series of enums so that I could change which key I wanted easily, and then immediately bricked my PC. Turns out, you shouldn't run
+PressKey in a while loop without some kind of pause. Lesson learned. I added in a wait to give my program a fixed update rate, making it 60 updates per 
+second because I study games programming and that sounded reasonable. This all went pretty smoothly, and by moving the cursor to the pointer position I was
+calculating I could even control the mouse. This part of the project actually went pretty smoothly - I was much more familiar with the windows documentation
+than I was previously, and I think this was a much simpler task. Most of the time was spent writing the enums. And with that, my functionality was completed.
+
+### 🏅 Finishing Touches
+To finish off my work on this project, I made a quick modification to turn it into a windows app. This felt like a more user friendly experience to me, and
+I liked making the program work based on button clicks. This required some refactoring of the code to make it fit a program loop and not softlock everything,
+but was not too complex a change.
+
+### 🏁 Final Thoughts And Conclusions
+This is perhaps my favourite thing that I have ever made. Throughout the 3 years since the start of this project that have passed as I do this write up, I 
+have learned so much about my independant research skills, my ability to achieve anything if I am willing to put in the time to look into it, the different
+levels of depth that I can look in to for my projects and how to make use of both complex documentation and navigate large codebases like that of dolphin
+emulator. I have had an incredible time, and in the future I would love to revisit this project to refactor the backend to a cleaner and more robust state 
+and give it a nicer GUI, and maybe even to release it as an open source project for anyone to work on (although I suspect that would be more work than I 
+realise). This has given me so much to think about and bring to all projects going forwards, and I've loved every minute of working on this.
 
 
 
