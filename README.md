@@ -98,12 +98,23 @@ first into bluetooth connections and a whole world of stuff I didn't understand,
 After all, I had barely got the hang of one of them.
 
 ### 👨‍💻 Amazing New Technology Is Holding Me Back
-At this point I made something I now consider a mistake. ChatGPT had just started getting popular. I wanted to try it. And so I did.
+At this point I made a decision which I now consider to be a mistake. ChatGPT had just started getting popular. I wanted to try it. And so I did.
 
 What resulted was code which I did not fully understand, which got progressively more conveluted without being understood until I was unable to work
 in and edit the project and was forced to start over from scratch. I tried to ask it to explain things to me, but this was no substitute for the 
 skills gained from learning enough to make it myself. More to the point, chatGPT had, frankly, no idea what it was doing. seemingly almost as little 
 as I myself did. Perhaps programming a connection to a wii remote isn't so common in it's training data (shocker).
+
+I tried in C# as well after this. Still no dice. It simply didn't have the skills required to make this kind of thing worked without much more 
+detailed input from me (at which point why not do it myself). However, I had started picking up on some basics of bluetooth and some libraries that
+I could look in to. Some noteable picks include a wiimote library on Nuget for C# which could let me interface with the wii remote through C# once 
+it was already connected, handling the low level stuff for me in a similar way to GlovePIE. WinRT reared it's head as an option for coding with
+bluetooth, as did raw winsock through C++. 
+
+What followed was about 8 failed attempts at finding a way to make this project work. The honest truth was that I didn't know enough to interface with
+something which required as much fine detail and specific cases as a wii remote yet. But I was slowly learning, little by little.
+
+### 🦾 Getting Better, Slowly But Surely
 
 
 
