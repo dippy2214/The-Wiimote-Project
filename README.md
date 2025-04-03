@@ -124,7 +124,8 @@ in C++, since after reading the actual documentation I had a better idea of what
 things, and immediately crumbled looking through such a large codebase for the first time in my life. But the thought was there! I also made more of an
 effort to fully read and understand everything written on a website I havent mentioned until now, Wiibrew's [wiimote technical guide](https://www.wiibrew.org/wiki/Wiimote).
 I was slowly building more confidence in the systems I was trying to use. I still found chatGPT useful, but more as a search engine to find resources 
-or specific parts of the documentation I needed but didn't know to even start looking for. 
+or specific parts of the documentation I needed but didn't know to even start looking for. By summer in my third year, I was ready and motivated for a 
+new and deeper look at this project
 
 
 
