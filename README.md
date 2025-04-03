@@ -180,7 +180,7 @@ to this problem, which I may test and try to add to dolphin myself, is to store 
 wiimote as a bluetooth device, and use the same hardware IDs to pick out the HID device you want, but I haven't got around to this yet as I'm excited to 
 have things working and want to push on with this project.
 
-#### 👨‍💼 Collecting dthe data
+#### 👨‍💼 Collecting The Data
 This is where the wiibrew wiki page truly came to be the single most valuable resource I found on this journey. The wiimote has a system of output reports,
 which act as output modes it will switch to when asked by the radio. The wiki page tells me exactly which binary code to send to the wiimote to get the 
 different reports from it, so I started with just the buttons (report 0x30) to test. I created a separate thread to listen to the wiimote and update the data
@@ -190,12 +190,37 @@ recieved data so when I wanted to access the buttons I could access the last upd
 one. 
 
 After I was satisfied with my systems for this, creating buffers of the correct size and reliably recording correct data, I looked into using some of the 
-other reports. I looked at getting accelerometer data and data from the IR sensor, but this is better discussed through how it is interpreted. to collect
+other reports. I looked at getting accelerometer data and data from the IR sensor, but this is better discussed through how it is interpreted. To collect
 this new data it is a simple matter of switching reports and making sure the buffer sizes are prepared, but for any full size output reports the wii remote
 uses a 22 byte system.
 
-#### 📊 Interpreting Data
+#### 📊 Interpreting The Data
+Interpreting the data was (mostly) ok. The core buttons just flipped bits across 2 bytes, so those were quite simple and easy to understand. The accelerometer
+was a more complicated problem, because of how it would change based on the report being used. In my final version of this project I settled on the 0x33
+output report, which included the core buttons, accelerometer data and IR sensor data. This meant that the accelerometer data was formatted as 3 unsigned ints,
+each getting it's own byte. However, the least significant bit of each of these was stored in a different place, within spare bits within the core button bytes.
+I did some bit switching to solve this, but it did trip me up for a while.
 
+The real saga was the IR sensor data. Firstly, there was the matter of turning it on. This meant sending the wiimote from my PC a series of input reports which
+corresponded to setting specific parts of it's memory to be settings for sensitivity which I desired. It sounds simple, and the wiki gives a very simple
+step by step guide on how to do this correctly, but I had many issues. 
+
+First of all, setting the memory at all. I struggled to correctly interpret this, and dolphin emulator used a complicated factory system to make it's input 
+reports which I could not fully understand without a guide. In the end I realised the problem was that I was not telling it the length of the data I wished
+to write to it's memory, but let it be known that this problem took me a long time, likely due to my lack of proper debugging methods to see into the memory 
+of the wiimote. It may have been worth figuring out how to use the read command, but with how hard I was finding the write it would have been difficult to 
+trust it.
+
+Then, I was finding that half the data seemed to be missing. This confused me for ages - I thought I was doing everything correctly. Now, let's take a glance
+at Nintendo's development process at this time. The software and hardware teams don't have that close a communication, and when things change from the 
+preliminary plans sometimes the updates are slow. Initial versions of the wii remote had it using 4 IR tracking points, but the final version used 2. In 
+short, the half of the data I thought was missing was actually me turning the sensitivity of the wii remote low enough (correctly) that it didn't pick up on
+anything other than the two IR lights on my sensor bar. This meant that the space dedicated to tracking the extra 2 unnecessary lights was empty. The wiimote
+was made to track 4 lights, when the final version only used 2. After realising that I actually had been doing this correctly for weeks and just thought it 
+was wrong because I'm silly, I experienced... *mixed* feelings. After some time, though, I settled on being happy about it and continued pushing forwards.
+All that was left was to translate the byte data directly into an int and piece together some more of the bits which were scattered around different bytes
+(details of this were thankfully available on the wiki). I then created a function to convert this into screen space using the resolution of the IR camera
+and my own monitor, and it was good to go!
 
 #### ⌨ Using The Data
 
