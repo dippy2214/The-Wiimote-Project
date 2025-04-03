@@ -168,9 +168,14 @@ basic wiimote) then I move on to connection.
 To connect I simply forget and then attach it. Forgetting the device just makes sure that nothing goes wrong if the computer remembers it from last time,
 which can cause some weird issues. This may seem like a very simple answer to a problem I struggled with for months. That is because it is. It was this 
 easy the whole time, and I had missed it entirely due to poor research, a desire to skip steps in learning and go straight to my fun project and a simple
-lack of direction with what to look at. I got so caught up in pairing and the pin number that I didn't realise how simple it would be to just not do that.
+lack of direction with what to look at. I got so caught up in pairing and the pin number that I didn't put time in to realise how simple it would be to 
+just not do that.
 
+#### 👨‍💼 Managing The Communication
 
+#### 📊 Interpreting Data
+
+#### ⌨ Using The Data
 
 
 
