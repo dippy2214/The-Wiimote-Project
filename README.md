@@ -45,6 +45,15 @@ before - I had to know.
 
 My research led me to a piece of software called GlovePie, and so the journey begins.
 
+### ⛳ Small Beginnings
+GlovePIE is an incredible piece of legacy software, created by Carl Kenner who no longer maintains it. Decompilation efforts are currently ongoing,
+and all recovered versions are available via a [github repo](https://github.com/GlovePIEPreservation/GlovePIE?tab=readme-ov-file#glovepie-preservation). 
+
+GlovePIE was originally an emulator for VR gloves, but the project grew to support much more hardware - including the nintendo wii remote. it comes
+with an IDE and supports a simple scripting language, which can be used to quickly and easily program a system for binding different inputs. 
+However, it will not connect the wii remote to the computer itself. For this, I downloaded dolphin emulator, an open source emulator for old
+Nintendo consoles, and connected the wii remote through that. With this system, I was able to write keybinds for my wii remote in a simple scripting 
+language similar to python and get something up and running quite quickly. 
 
 
 
