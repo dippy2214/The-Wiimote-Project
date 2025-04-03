@@ -123,6 +123,9 @@ I had changed my approach since trying to chatGPT the whole project, and looked 
 in C++, since after reading the actual documentation I had a better idea of what was going on there. I looked into dolphin emulator and how they did 
 things, and immediately crumbled looking through such a large codebase for the first time in my life. But the thought was there! I also made more of an
 effort to fully read and understand everything written on a website I havent mentioned until now, Wiibrew's [wiimote technical guide](https://www.wiibrew.org/wiki/Wiimote).
+This is an incredible community driven resource made by reverse engineering the wii remote's and wii's code, and explains how they work  on a technical
+level right down to the binary they will send in different kinds of reports.
+
 I was slowly building more confidence in the systems I was trying to use. I still found chatGPT useful, but more as a search engine to find resources 
 or specific parts of the documentation I needed but didn't know to even start looking for. By summer in my third year, I was ready and motivated for a 
 new and deeper look at this project.
