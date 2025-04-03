@@ -40,8 +40,10 @@ a project to keep myself entertained.
 And I just saw a youtube video of someone playing rocket league using a wii remote.
 
 Naturally, my first thought was 'How?'. The whole world of programming was opening up before me, and I was just starting to realise that if I got
-good enough at this I could do anything, and all the information I needed was somewhere on the internet. But I had never seen something like this
+good enough at this I could do anything. All the information I need is somewhere on the internet. But I had never seen something like this
 before - I had to know. 
+
+My research led me to a piece of software called GlovePie, and so the journey begins.
 
 
 
