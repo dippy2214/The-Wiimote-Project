@@ -132,8 +132,8 @@ or specific parts of the documentation I needed but didn't know to even start lo
 new and deeper look at this project.
 
 ### 🚶‍♂️ A New Path Forward
-I was now settling in to researching how to code this project, rather than researching what to code it with. But you might be thinking what was taking me
-so long. Surely this can't have been that bad.
+I was now settling in to researching how to code this project, rather than researching what to code it with. 'But,' you might be thinking, 'What is taking 
+so long.' Surely this can't have been that bad.
 
 Well, let's take a look. To make this project work, I need to do a few things:
 - Device discovery, where I find all available devices 
@@ -147,5 +147,13 @@ REQUIRED TO MAKE AND USE A CONNECTION WITH IT, but the fact that it has one was 
 to it. Working out the pin code is something that many people have a lot of ideas on how to do, none of which worked. And believe me, I found the most
 obscure of reddit threads in my research. Possibly the most frustrating part of it is that it may have been a sticker that was no longer on my wii remotes
 after the years of use.
+
+This problem is actually part of what influenced me to choose something like the WinAPI over other options that may have been slightly easier to use. It
+was the first system that I worked out how to gain the control I needed through, making use of the bluetooth and HID libraries. This did mean redesigning
+my systems for the other parts of the process though.
+
+### 🌳 In The Thick Of It
+
+
 
 
