@@ -1,6 +1,6 @@
 # The Wiimote Project 🎮
 
-Welcome to the wiimote project, something I am working on as I study in uni. This project is intended to be an app which allows the user to connect to a wii remote and use it to emulate keyboard inputs, allowing them to do anything on their PC with a wii remote (providing they have a wii sensor bar - or two candles - to use the pointer). This is still in an unrefined state (call it a beta) but feel free to try it out! 
+Welcome to the wiimote project, An app I am working on as I study in uni. This app is intended to allow the user to connect to a wii remote and use it to emulate keyboard inputs, allowing them to do anything on their PC with a wii remote (providing they have a wii sensor bar - or two candles - to use the pointer). This is still in an unrefined state (call it a beta) but feel free to try it out! 
 
 The program already supports connecting to and using the wii remote, pointer and all, but is missing a lot of quality of life features and sometimes individual clicks with the wiimote can be janky.
 
