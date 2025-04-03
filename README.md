@@ -56,7 +56,7 @@ Nintendo consoles, and connected the wii remote through that. With this system, 
 language similar to python and get something up and running quite quickly. In my excitement, I even got a video to share with friends!
 
 <a href="https://youtu.be/BgOgzSvBRzw">
-  <img src="https://youtu.be/BgOgzSvBRzw/maxresdefault.jpg" alt="Watch the video" width="600" height="337">
+  <img src="https://i.ytimg.com/vi/BgOgzSvBRz/oar2.jpg" alt="Watch the video" width="600" height="337">
 </a>
 
 
