@@ -171,6 +171,15 @@ easy the whole time, and I had missed it entirely due to poor research, a desire
 lack of direction with what to look at. I got so caught up in pairing and the pin number that I didn't put time in to realise how simple it would be to 
 just not do that.
 
+Once the bluetooth connection is made the program is then free to transition to HID connection, which ironically involves discovery again on the HID side,
+and this time checking the hardware IDs. This is something I actually spoke about with someone who worked on the wiimote support for dolphin emulator, and
+I learned that dolphin emulator handles this even worse. Because it needs to support all third party wii remotes, it cannot exhaustively fill in hardware
+IDs for all of them. Therefore, it just tries to use every device as a wii remote and waits around to see if it works (for windows. linux just lets you get
+the HID devices directly from your reference to the bluetooth device 🙂). I think the optimal solution to this problem, which I may test and try to add to
+dolphin myself, is to store the hardware IDs in some sort of dictionary in runtime when you find the wiimote as a bluetooth device, and use the same 
+hardware IDs to pick out the HID device you want, but I haven't got around to this yet as I'm excited to have things working and want to push on with this
+project.
+
 #### 👨‍💼 Managing The Communication
 
 #### 📊 Interpreting Data
