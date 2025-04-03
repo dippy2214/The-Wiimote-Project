@@ -61,6 +61,12 @@ I have come to love the GlovePIE project, not least because I would now love to 
 the project satisfied me for a while, it was not enough to shake the idea from my head. I felt as though it had been too easy, and as such that I had
 not learned as much as I could have. I wanted *more*.
 
+### 🔂 The First Of Many
+I revisited this project that same summer. This time, I knew I wanted to have this whole program in one self contained project. I had big visions 
+of supporting all sorts of unconventional input devices, like guitar hero guitars and the DK bongos. But of course, it all started with the wii
+remote. I didn't like having to rely on dolphin emulator, so connecting my PC to the wii remote became the first big hurdle, but I also wanted
+to recreate what I had achieved through GlovePIE in my own project.
+
 
 
 
