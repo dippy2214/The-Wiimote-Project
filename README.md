@@ -115,7 +115,16 @@ What followed was about 8 failed attempts at finding a way to make this project 
 something which required as much fine detail and specific cases as a wii remote yet. But I was slowly learning, little by little.
 
 ### 🦾 Getting Better, Slowly But Surely
+That summer came and went, without significant progress. However, I did get some little wins. I managed to connect my computer to my Iphone, and could
+discover devices now. I revisited the project through the christmas holidays of second year as well, but progress had slowed a lot despite my research.
+But these little things were adding up.
 
+I had changed my approach since trying to chatGPT the whole project, and looked through more real world example. I settled onto using the windows API 
+in C++, since after reading the actual documentation I had a better idea of what was going on there. I looked into dolphin emulator and how they did 
+things, and immediately crumbled looking through such a large codebase for the first time in my life. But the thought was there! I also made more of an
+effort to fully read and understand everything written on a website I havent mentioned until now, Wiibrew's [wiimote technical guide](https://www.wiibrew.org/wiki/Wiimote).
+I was slowly building more confidence in the systems I was trying to use. I still found chatGPT useful, but more as a search engine to find resources 
+or specific parts of the documentation I needed but didn't know to even start looking for. 
 
 
 
