@@ -1,5 +1,4 @@
 # The Wiimote Project 🎮
-
 Welcome to the wiimote project, An app I am working on as I study in uni. This app is intended to allow the user to connect to a wii remote and 
 use it to emulate keyboard inputs, allowing them to do anything on their PC with a wii remote (providing they have a wii sensor bar - or two 
 candles - to use the pointer). This is still in an unrefined state (call it a beta) but feel free to try it out! 
@@ -8,7 +7,6 @@ The program already supports connecting to and using the wii remote, pointer and
 sometimes individual clicks with the wiimote can be janky.
 
 ## Key Goals 📒
-
 There are two key goals for this project: 
 - Make an app that anyone could use, even a non programmer
 - Create it without using any external libraries besides the windows API.
@@ -21,7 +19,6 @@ Full credit to the team working on dolphin emulator, which I used as a valuable 
 connections worked. 
 
 ## The Development Process 🛠
-
 This project has gone through many iterations, most of which were non functional. I truly dove in at the deep end here, knowing absolutely nothing
 about how to make and use a bluetooth connection and with no kind of education on the subject, and at the time of starting only a basic understanding
 of how to C++. Over the next 3 years of developing this project, I would learn about how bluetooth connections work, my programming fundamentals 
