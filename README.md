@@ -162,8 +162,15 @@ Discovery was something I was realtively familiar with now from my experiments. 
 and devices (the wiimote). I select the first (and only) radio to use my computer by default, which lets me store the radio info in an object. If this 
 works, I find the first bluetooth device and store it's info. I then iterate through all devices using the BluetoothFindNextDevice function, outputting 
 data for my own debugging purposes. Then we query the device name, and if it matches with the names we expect from a wii remote (Nintendo RVL-CNT-01 for a
-basic wiimote) then I forget and then attach it. Forgetting the device just makes sure that nothing goes wrong if the computer remembers it from last time,
-which can cause some weird issues. 
+basic wiimote) then I move on to connection.
+
+#### 📶 Connection
+To connect I simply forget and then attach it. Forgetting the device just makes sure that nothing goes wrong if the computer remembers it from last time,
+which can cause some weird issues. This may seem like a very simple answer to a problem I struggled with for months. That is because it is. It was this 
+easy the whole time, and I had missed it entirely due to poor research, a desire to skip steps in learning and go straight to my fun project and a simple
+lack of direction with what to look at. I got so caught up in pairing and the pin number that I didn't realise how simple it would be to just not do that.
+
+
 
 
 
