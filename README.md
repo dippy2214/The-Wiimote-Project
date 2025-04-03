@@ -45,7 +45,7 @@ before - I had to know.
 
 My research led me to a piece of software called GlovePie, and so the journey begins.
 
-### ⛳ Small Beginnings
+### ⛳ Humble Beginnings
 GlovePIE is an incredible piece of legacy software, created by Carl Kenner who no longer maintains it. Decompilation efforts are currently ongoing,
 and all recovered versions are available via a [github repo](https://github.com/GlovePIEPreservation/GlovePIE?tab=readme-ov-file#glovepie-preservation). 
 
@@ -114,7 +114,7 @@ bluetooth, as did raw winsock through C++.
 What followed was about 8 failed attempts at finding a way to make this project work. The honest truth was that I didn't know enough to interface with
 something which required as much fine detail and specific cases as a wii remote yet. But I was slowly learning, little by little.
 
-### 🦾 Getting Better, Slowly But Surely
+### 💪 Getting Better, Slowly But Surely
 That summer came and went, without significant progress. However, I did get some little wins. I managed to connect my computer to my Iphone, and could
 discover devices now. I revisited the project through the christmas holidays of second year as well, but progress had slowed a lot despite my research.
 But these little things were adding up.
@@ -125,9 +125,9 @@ things, and immediately crumbled looking through such a large codebase for the f
 effort to fully read and understand everything written on a website I havent mentioned until now, Wiibrew's [wiimote technical guide](https://www.wiibrew.org/wiki/Wiimote).
 I was slowly building more confidence in the systems I was trying to use. I still found chatGPT useful, but more as a search engine to find resources 
 or specific parts of the documentation I needed but didn't know to even start looking for. By summer in my third year, I was ready and motivated for a 
-new and deeper look at this project
+new and deeper look at this project.
 
-
+### 🚶‍♂️ A New Path Forward
 
 
 
