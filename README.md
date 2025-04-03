@@ -27,7 +27,8 @@ wanted to be communicated with.
 
 But, all of that comes later. To start with, I only had the basics of the original idea, creating some program that let me use the wii remote on my
 computer, and neither of the two key goals had really been brought up yet. I wanted a proof of concept, something silly and cool that I could 
-show off to my friends. At this stage it was less about learning and more about doing something cool.
+show off to my friends. At this stage it was less about learning and more about doing something cool. (if you are only interested in the current
+version of the project and more technical details, [click here]()
 
 ### 🧞 A Whole New World
 Picture the scene: I'm just out of high school, done an A level in computer science. A combination of covid and my teacher getting fired mean that 
