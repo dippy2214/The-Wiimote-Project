@@ -57,6 +57,33 @@ language similar to python and get something up and running quite quickly. In my
 
 [![Watch Here](https://img.youtube.com/vi/BgOgzSvBRzw/0.jpg)](https://www.youtube.com/watch?v=BgOgzSvBRzw&feature=youtu.be "Watch Here!")
 
+  //show/hide glovepie
+  if var.run == FALSE then
+  var.run = TRUE
+  HidePie
+  var.hidden = TRUE
+  endif
+
+  //hide and show glovepie with home button double click
+  if ((DoubleClicked(wiimote.Home) and Wiimote.HasClassic == FALSE) or DoubleClicked(Home) or Doubleclicked(wiimote.Classic.Home)) and var.hidden then
+  ShowPie
+  var.hidden = FALSE
+  elseif ((DoubleClicked(wiimote.Home) and Wiimote.HasClassic == FALSE) or DoubleClicked(Home) or Doubleclicked(wiimote.Classic.Home)) and var.hidden == FALSE then
+  HidePie
+  var.hidden = TRUE
+  endif
+
+
+
+  //wii remote pointer mouse stuff
+  wiimote1.led1 = true
+
+  mouse.CursorPosX = 1920 - smooth(round((((wiimote.dot1x + wiimote.dot2x)/2)/1012) * 3840), 3)
+  mouse.CursorPosY = smooth(round((((wiimote.dot1y + wiimote.dot2y)/2)/800) * 1200), 3)
+
+  mouse.LeftButton = wiimote.A and KeepDown(Wiimote.PointerVisible,0.5s)
+  mouse.RightButton = wiimote.B and KeepDown(Wiimote.PointerVisible,0.5s)
+
 I have come to love the GlovePIE project, not least because I would now love to make something like that myself. However, while this simple version of
 the project satisfied me for a while, it was not enough to shake the idea from my head. I felt as though it had been too easy, and as such that I had
 not learned as much as I could have. I wanted *more*.
