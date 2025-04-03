@@ -30,5 +30,20 @@ computer, and neither of the two key goals had really been brought up yet. I wan
 show off to my friends. At this stage it was less about learning and more about doing something cool.
 
 ### 🧞 A Whole New World
+Picture the scene: I'm just out of high school, done an A level in computer science. A combination of covid and my teacher getting fired mean that 
+I essentially taught myself coding to pass. However, my year groups coursework got leaked and didn't contribute to the final grade, meaning we
+only got graded on the theory - a potential life saver for me. I managed to get an A in the class and grades good enough to get into Abertay uni,
+and now I've moved out of my parents house and to Dundee to study games programming (a subject I realised I enjoyed only through teaching myself
+the coding project in my A level). Now I am halfway through first year, I've learned the basics of C++, and now that it's the holiday time I want
+a project to keep myself entertained. 
+
+And I just saw a youtube video of someone playing rocket league using a wii remote.
+
+Naturally, my first thought was 'How?'. The whole world of programming was opening up before me, and I was just starting to realise that if I got
+good enough at this I could do anything, and all the information I needed was somewhere on the internet. But I had never seen something like this
+before - I had to know. 
+
+
+
 
 
