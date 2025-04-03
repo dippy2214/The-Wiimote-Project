@@ -132,6 +132,20 @@ or specific parts of the documentation I needed but didn't know to even start lo
 new and deeper look at this project.
 
 ### 🚶‍♂️ A New Path Forward
+I was now settling in to researching how to code this project, rather than researching what to code it with. But you might be thinking what was taking me
+so long. Surely this can't have been that bad.
 
+Well, let's take a look. To make this project work, I need to do a few things:
+- Device discovery, where I find all available devices 
+- Making the connection, where I pick out the device I want and connect to it
+- Managing the connection, which is by far the most complicated part, where I broadcast to and recieve data from with the wii remote
+- Interpreting data, where I take the data the wii remote is giving me and make sense of it
+- Using the data, where I take what I have and use it to emulate keyboard inputs as I see fit
+
+My current issue is that while I have figured out device discovery, making the connection eludes me. The wii remote has a bluetooth pin, which IS NOT
+REQUIRED TO MAKE AND USE A CONNECTION WITH IT, but the fact that it has one was confusing me and a lot of the abstractions I was trying to use to connect
+to it. Working out the pin code is something that many people have a lot of ideas on how to do, none of which worked. And believe me, I found the most
+obscure of reddit threads in my research. Possibly the most frustrating part of it is that it may have been a sticker that was no longer on my wii remotes
+after the years of use.
 
 
