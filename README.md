@@ -70,7 +70,7 @@ to recreate what I had achieved through GlovePIE in my own project. And so I cre
 The first test was made in a C++ project, for one simple reason - it's the language I knew best. I considered using something more adept at 
 bluetooth connections, but (perhaps foolishly) chose not to try to learn even more new things at once. I figured that I was already diving head
 first into bluetooth connections and a whole world of stuff I didn't understand, and I shouldn't try to learn a whole new language on top of that.
-After all, I had barely got the hang of one.
+After all, I had barely got the hang of one of them.
 
 
 
