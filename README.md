@@ -55,8 +55,8 @@ However, it will not connect the wii remote to the computer itself. For this, I 
 Nintendo consoles, and connected the wii remote through that. With this system, I was able to write keybinds for my wii remote in a simple scripting 
 language similar to python and get something up and running quite quickly. In my excitement, I even got a video to share with friends!
 
-<a href="https://youtu.be/BgOgzSvBRzw">
-  <img src="https://i.ytimg.com/vi/BgOgzSvBRz/oar2.jpg" alt="Watch the video" width="600" height="337">
+<a href="https://www.youtube.com/watch?v=BgOgzSvBRzw">
+  <img src="https://img.youtube.com/vi/_BgOgzSvBRzw/maxresdefault.jpg" alt="Watch the video" width="600" height="337">
 </a>
 
 
