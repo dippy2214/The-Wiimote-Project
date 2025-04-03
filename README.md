@@ -153,7 +153,17 @@ was the first system that I worked out how to gain the control I needed through,
 my systems for the other parts of the process though.
 
 ### 🌳 In The Thick Of It
+Let's get into the nitty gritty of how my systems work. The wiimote is what's known as a bluetooth-HID device, which means it will operate on the bluetooth
+HID protocol. This is valuable to me because windows has both a bluetooth and a HID device library, and once I have done the initial bluetooth connection I
+can interact with the device through the HID libraries (which I find easier and which dolphin emulator does). 
 
+#### 🗺 Discovery
+Discovery was something I was realtively familiar with now from my experiments. Bluetooth communication works between radios (my computer's bluetooth chip) 
+and devices (the wiimote). I select the first (and only) radio to use my computer by default, which lets me store the radio info in an object. If this 
+works, I find the first bluetooth device and store it's info. I then iterate through all devices using the BluetoothFindNextDevice function, outputting 
+data for my own debugging purposes. Then we query the device name, and if it matches with the names we expect from a wii remote (Nintendo RVL-CNT-01 for a
+basic wiimote) then I forget and then attach it. Forgetting the device just makes sure that nothing goes wrong if the computer remembers it from last time,
+which can cause some weird issues. 
 
 
 
